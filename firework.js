@@ -28,7 +28,7 @@ var canvas = document.getElementById("canvas"),
   limiterTick = 0,
   // this will time the auto launches of fireworks, one launch per 80 loop ticks
   timerTotal = 100,
-  timerTick = 0,
+  timerTick = 30,
   mousedown = false,
   // mouse x coordinate,
   mx,
@@ -75,8 +75,8 @@ function Firework(sx, sy, tx, ty) {
     this.coordinates.push([this.x, this.y]);
   }
   this.angle = Math.atan2(ty - sy, tx - sx);
-  this.speed = 2;
-  this.acceleration = 1.05;
+  this.speed = 1.5;
+  this.acceleration = 1.02;
   this.brightness = random(50, 70);
   // circle target indicator radius
   this.targetRadius = 1;
@@ -253,27 +253,19 @@ function loop() {
   if (timerTick >= timerTotal) {
     timerTick = 0;
   } else {
-    var temp = timerTick % 400;
-    if (temp <= 15) {
-      fireworks.push(new Firework(100, ch, random(190, 200), random(90, 100)));
-      fireworks.push(
-        new Firework(cw - 100, ch, random(cw - 200, cw - 190), random(90, 100))
-      );
+    // Thay thế toàn bộ phần code cũ bằng code mới này
+    if (timerTick % 30 === 0) {
+      // Bắn pháo hoa mỗi 30 tick
+      // Random vị trí bắn từ đáy màn hình
+      var startX = random(50, cw - 50); // Cách mép 50px
+      var startY = ch; // Đáy màn hình
+
+      // Random vị trí đích trên màn hình
+      var targetX = random(50, cw - 50);
+      var targetY = random(50, ch / 2); // Chỉ random nửa trên màn hình
+
+      fireworks.push(new Firework(startX, startY, targetX, targetY));
     }
-
-    var temp3 = temp / 10;
-
-    if (temp > 319) {
-      fireworks.push(
-        new Firework(
-          300 + (temp3 - 31) * 100,
-          ch,
-          300 + (temp3 - 31) * 100,
-          200
-        )
-      );
-    }
-
     timerTick++;
   }
 
