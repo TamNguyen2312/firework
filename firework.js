@@ -153,7 +153,7 @@ function Particle(x, y) {
   this.y = y;
   // track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
   this.coordinates = [];
-  this.coordinateCount = 8;
+  this.coordinateCount = 5;
 
   while (this.coordinateCount--) {
     this.coordinates.push([this.x, this.y]);
@@ -221,7 +221,7 @@ function createParticles(x, y) {
   explosionSound.play();
 
   // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
-  var particleCount = 200;
+  var particleCount = 150;
   while (particleCount--) {
     particles.push(new Particle(x, y));
   }
