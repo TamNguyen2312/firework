@@ -14,6 +14,9 @@ window.requestAnimFrame = (function () {
 // now we will setup our basic variables for the demo
 var canvas = document.getElementById("canvas"),
   ctx = canvas.getContext("2d"),
+  // Thêm audio elements
+  launchSound = document.getElementById("launch"),
+  explosionSound = document.getElementById("explosion"),
   // full screen dimensions
   cw = window.innerWidth,
   ch = window.innerHeight,
@@ -80,6 +83,10 @@ function Firework(sx, sy, tx, ty) {
   this.brightness = random(50, 70);
   // circle target indicator radius
   this.targetRadius = 1;
+
+  // Phát âm thanh khi bắn
+  launchSound.currentTime = 0;
+  launchSound.play();
 }
 
 // update firework
@@ -146,7 +153,7 @@ function Particle(x, y) {
   this.y = y;
   // track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
   this.coordinates = [];
-  this.coordinateCount = 5;
+  this.coordinateCount = 8;
 
   while (this.coordinateCount--) {
     this.coordinates.push([this.x, this.y]);
@@ -209,8 +216,12 @@ Particle.prototype.draw = function () {
 
 // create particle group/explosion
 function createParticles(x, y) {
+  // Phát âm thanh khi nổ
+  explosionSound.currentTime = 0;
+  explosionSound.play();
+
   // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
-  var particleCount = 100;
+  var particleCount = 200;
   while (particleCount--) {
     particles.push(new Particle(x, y));
   }
