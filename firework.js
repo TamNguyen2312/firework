@@ -221,7 +221,7 @@ function createParticles(x, y) {
   explosionSound.play();
 
   // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
-  var particleCount = 150;
+  var particleCount = 100;
   while (particleCount--) {
     particles.push(new Particle(x, y));
   }
